@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Green PDF AI - Modern Mobile-Responsive Android APK & Web App for Photos to PDF, AI Resume Maker, Document Scanner with OCR, Merge, Edit, and Compress PDF.">
+  <meta name="theme-color" content="#10b981">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Green PDF AI">
+
+  <title>Green PDF AI — Smart Mobile PDF Studio & Resume Maker</title>
+
+  <!-- PWA Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+
+  <!-- Google Fonts: Inter, Outfit, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- jsPDF for Client-Side PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- pdf-lib for Merging, Slicing, Deleting, and Rotating PDF Pages -->
+  <script src="https://unpkg.com/pdf-lib@1.17.9/dist/pdf-lib.min.js"></script>
+
+  <!-- PDF.js for Page Rendering and High-Fidelity Thumbnails -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- Tesseract.js for Real Client-Side OCR Text Extraction -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area" id="nav-brand" role="button" tabindex="0" title="Green PDF AI Dashboard">
+        <div class="logo-icon-wrap">
+          <i data-lucide="file-text" class="logo-icon"></i>
+          <span class="logo-sparkle"><i data-lucide="sparkles"></i></span>
+        </div>
+        <div class="logo-text">
+          <span class="brand-title">Green PDF<span class="brand-accent"> AI</span></span>
+          <span class="brand-badge">PRO</span>
+        </div>
+      </div>
+
+      <!-- Center Active View Breadcrumb for Mobile -->
+      <div class="header-view-title" id="header-view-title">
+        <span id="active-view-name">Home</span>
+      </div>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- Back Button (shown inside tools) -->
+        <button id="btn-header-back" class="icon-btn header-back-btn hidden" title="Back to Home" aria-label="Back to Home">
+          <i data-lucide="arrow-left"></i>
+          <span class="btn-text-desktop">Home</span>
+        </button>
+
+        <!-- Quick Dark/Light Theme Toggle -->
+        <button id="btn-theme-toggle" class="icon-btn" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+
+        <!-- Three-Dot Menu Button -->
+        <div class="menu-dropdown-wrap">
+          <button id="btn-three-dots" class="icon-btn three-dots-btn" aria-haspopup="true" aria-expanded="false" title="More options" aria-label="Main navigation menu">
+            <i data-lucide="more-vertical"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <nav id="three-dots-menu" class="three-dots-dropdown" role="menu" aria-label="App Navigation Menu">
+            <div class="dropdown-header">
+              <span class="dropdown-title">Green PDF AI</span>
+              <span class="dropdown-version">v1.0.0 • com.greenpdf.ai</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="menu-item" data-action="go-home" role="menuitem">
+              <i data-lucide="home"></i>
+              <span>Home</span>
+            </button>
+            <button class="menu-item" data-action="go-pdf-tools" role="menuitem">
+              <i data-lucide="layers"></i>
+              <span>PDF Tools</span>
+            </button>
+            <button class="menu-item" data-action="go-resume" role="menuitem">
+              <i data-lucide="briefcase"></i>
+              <span>AI Resume Maker</span>
+            </button>
+            <button class="menu-item" data-action="go-scanner" role="menuitem">
+              <i data-lucide="camera"></i>
+              <span>Document Scanner</span>
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="menu-item" data-action="toggle-theme-direct" role="menuitem">
+              <i data-lucide="moon"></i>
+              <span>Toggle Dark Mode</span>
+            </button>
+            <button class="menu-item" data-action="open-settings" role="menuitem">
+              <i data-lucide="settings"></i>
+              <span>Settings</span>
+            </button>
+            <button class="menu-item" data-action="open-feedback" role="menuitem">
+              <i data-lucide="message-square-heart"></i>
+              <span>Feedback</span>
+            </button>
+            <button class="menu-item" data-action="share-app" role="menuitem">
+              <i data-lucide="share-2"></i>
+              <span>Share App</span>
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="menu-item" data-action="open-about" role="menuitem">
+              <i data-lucide="info"></i>
+              <span>About</span>
+            </button>
+            <button class="menu-item" data-action="open-privacy" role="menuitem">
+              <i data-lucide="shield-check"></i>
+              <span>Privacy Policy</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Security & Local Processing Banner -->
+  <div class="privacy-banner">
+    <div class="privacy-content">
+      <i data-lucide="lock" class="mini-lock-icon"></i>
+      <span><strong>100% Client-Side Privacy:</strong> All PDF operations, OCR, and camera captures run locally in your browser/device sandbox. Zero unauthorized cloud uploads.</span>
+    </div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <main class="main-content" id="app-viewport">
+
+    <!-- ============================================================ -->
+    <!-- VIEW 1: HOME DASHBOARD                                       -->
+    <!-- ============================================================ -->
+    <section id="view-home" class="app-view active" aria-labelledby="home-heading">
+      <div class="hero-section">
+        <div class="hero-badge">
+          <i data-lucide="sparkles"></i>
+          <span>Android APK + Progressive Web App</span>
+        </div>
+        <h1 id="home-heading" class="hero-title">
+          Green PDF <span class="gradient-text">AI Studio</span>
+        </h1>
+        <p class="hero-subtitle">
+          Professional all-in-one PDF workstation: batch convert photos, scan documents with camera OCR, merge and compress files, and craft ATS-ready resumes with AI assistance.
+        </p>
+
+        <!-- Quick Stats Strip -->
+        <div class="quick-stats-strip">
+          <div class="stat-item">
+            <i data-lucide="shield-check"></i>
+            <span>Private & Local</span>
+          </div>
+          <div class="stat-dot">•</div>
+          <div class="stat-item">
+            <i data-lucide="smartphone"></i>
+            <span>Android APK Ready</span>
+          </div>
+          <div class="stat-dot">•</div>
+          <div class="stat-item">
+            <i data-lucide="scan-text"></i>
+            <span>Tesseract OCR Built-in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Cards Grid (8 Core Interactive Tools) -->
+      <div class="section-container">
+        <div class="section-heading-row">
+          <div>
+            <h2 class="section-title">Essential PDF & AI Tools</h2>
+            <span class="section-desc">Select any tool below to launch its workspace</span>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Card 1: Photos to PDF -->
+          <div class="feature-card" data-route="photos-pdf" tabindex="0" role="button">
+            <div class="card-icon-wrap green-gradient">
+              <i data-lucide="image"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag">Popular</span>
+              </div>
+              <h3 class="card-title">Photos to PDF</h3>
+              <p class="card-desc">Batch convert gallery photos or images into clean multi-page PDFs with margins, reordering, and compression.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Open Photos <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 2: AI Resume Maker -->
+          <div class="feature-card featured" data-route="resume" tabindex="0" role="button">
+            <div class="card-icon-wrap ai-gradient">
+              <i data-lucide="briefcase"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag ai-tag"><i data-lucide="sparkles"></i> AI Powered</span>
+              </div>
+              <h3 class="card-title">AI Resume Maker</h3>
+              <p class="card-desc">Build ATS-friendly modern resumes with dynamic sections, STAR-metric bullet suggestions, live A4 preview, and PDF export.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Build Resume <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 3: AI Document Scanner -->
+          <div class="feature-card" data-route="scanner" tabindex="0" role="button">
+            <div class="card-icon-wrap emerald-gradient">
+              <i data-lucide="camera"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag live">Camera + OCR</span>
+              </div>
+              <h3 class="card-title">AI Document Scanner</h3>
+              <p class="card-desc">Capture paper docs with camera, apply smart B&W filters, extract text with client-side OCR, and summarize with AI.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Scan Document <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 4: Merge PDF -->
+          <div class="feature-card" data-route="merge" tabindex="0" role="button">
+            <div class="card-icon-wrap teal-gradient">
+              <i data-lucide="combine"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag">Lossless</span>
+              </div>
+              <h3 class="card-title">Merge PDF</h3>
+              <p class="card-desc">Combine multiple PDF files into a single structured document in your exact preferred sequence with zero degradation.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Merge Files <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 5: Edit PDF -->
+          <div class="feature-card" data-route="edit-pdf" tabindex="0" role="button">
+            <div class="card-icon-wrap mint-gradient">
+              <i data-lucide="file-edit"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag">Editor</span>
+              </div>
+              <h3 class="card-title">Edit PDF</h3>
+              <p class="card-desc">Inspect thumbnail pages, reorder sequence, rotate pages, extract selected sections, and undo edits with 1-click.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Edit Pages <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 6: Delete PDF Pages -->
+          <div class="feature-card" data-route="delete-pages" tabindex="0" role="button">
+            <div class="card-icon-wrap red-gradient">
+              <i data-lucide="trash-2"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag danger-tag">Remove Pages</span>
+              </div>
+              <h3 class="card-title">Delete PDF Pages</h3>
+              <p class="card-desc">Selectively remove unwanted pages, blank sheets, or extra covers from any PDF document with instant preview.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Delete Pages <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 7: Compress PDF -->
+          <div class="feature-card" data-route="compress" tabindex="0" role="button">
+            <div class="card-icon-wrap amber-gradient">
+              <i data-lucide="minimize-2"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag">Optimizer</span>
+              </div>
+              <h3 class="card-title">Compress PDF</h3>
+              <p class="card-desc">Shrink PDF document size for email attachment and fast web uploads with selectable compression presets and size savings preview.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">Compress PDF <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 8: Recent Documents Card -->
+          <div class="feature-card" data-route="recent-docs-view" tabindex="0" role="button">
+            <div class="card-icon-wrap blue-gradient">
+              <i data-lucide="clock"></i>
+            </div>
+            <div class="card-body">
+              <div class="card-header-tags">
+                <span class="pill-tag">Session History</span>
+              </div>
+              <h3 class="card-title">Recent Documents</h3>
+              <p class="card-desc">Quickly access, preview, print, or share previously exported PDFs created during your current app session.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action-link">View History <i data-lucide="arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Documents Section on Dashboard -->
+      <div class="section-container">
+        <div class="section-heading-row">
+          <div>
+            <h2 class="section-title">Recent Documents</h2>
+            <span class="section-desc">Generated files from your current session</span>
+          </div>
+          <button id="btn-clear-history" class="btn-text-danger" title="Clear all recent history">
+            <i data-lucide="trash-2"></i> Clear History
+          </button>
+        </div>
+
+        <div id="recent-docs-container" class="recent-docs-list">
+          <div class="empty-state-card" id="recent-docs-empty">
+            <div class="empty-icon-wrap">
+              <i data-lucide="clock"></i>
+            </div>
+            <h4>No generated documents yet</h4>
+            <p>Your exported PDFs from any tool will appear here for instant preview, printing, or sharing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 2: PHOTOS TO PDF                                        -->
+    <!-- ============================================================ -->
+    <section id="view-photos-pdf" class="app-view" aria-labelledby="photos-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <h2 id="photos-heading" class="view-title">Photos to PDF</h2>
+          <p class="view-subtitle">Select multiple photos, reorder them, adjust margins, and export a clean PDF file.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-photos-clear-all" class="btn btn-outline-danger" disabled>
+            <i data-lucide="trash"></i> Clear All
+          </button>
+          <button id="btn-photos-generate-pdf" class="btn btn-primary" disabled>
+            <i data-lucide="file-check"></i> Generate PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-layout">
+        <!-- Main: Dropzone & Gallery -->
+        <div class="tool-main-col">
+          <div class="upload-dropzone" id="photos-dropzone">
+            <input type="file" id="photos-file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/bmp" multiple class="file-input-hidden">
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <i data-lucide="upload-cloud"></i>
+              </div>
+              <h3 class="dropzone-title">Drop photos here or <span class="highlight-link">Browse files</span></h3>
+              <p class="dropzone-hint">Supports JPG, PNG, WEBP, BMP • Select one or multiple images</p>
+              <button type="button" class="btn btn-outline dropzone-btn" onclick="document.getElementById('photos-file-input').click()">
+                <i data-lucide="plus"></i> Select Images
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-wrapper">
+            <div class="gallery-toolbar">
+              <span class="gallery-count" id="photos-count-label">0 photos selected</span>
+              <span class="gallery-hint"><i data-lucide="info"></i> Use arrows to reorder pages</span>
+            </div>
+            <div class="photo-cards-grid" id="photos-grid">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Settings -->
+        <div class="tool-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title"><i data-lucide="sliders"></i> PDF Settings</h3>
+            
+            <div class="form-group">
+              <label for="photos-doc-name">Document Title</label>
+              <input type="text" id="photos-doc-name" class="form-control" value="My_Photos_Document" placeholder="Enter document name">
+            </div>
+
+            <div class="form-group">
+              <label for="photos-page-size">Page Format</label>
+              <select id="photos-page-size" class="form-control">
+                <option value="a4" selected>A4 (210 × 297 mm)</option>
+                <option value="letter">US Letter (8.5 × 11 in)</option>
+                <option value="fit">Fit to Image Aspect</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="photos-orientation">Page Orientation</label>
+              <select id="photos-orientation" class="form-control">
+                <option value="portrait" selected>Portrait</option>
+                <option value="landscape">Landscape</option>
+                <option value="auto">Auto (Match Image)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="photos-margin">Page Margins</label>
+              <select id="photos-margin" class="form-control">
+                <option value="0">No Margins (Edge to Edge)</option>
+                <option value="10" selected>Small (10 mm)</option>
+                <option value="20">Normal (20 mm)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="photos-quality">Image Compression</label>
+              <select id="photos-quality" class="form-control">
+                <option value="0.95" selected>High Quality (95%)</option>
+                <option value="0.80">Balanced (80%)</option>
+                <option value="0.60">Compact File Size (60%)</option>
+              </select>
+            </div>
+
+            <div class="action-card-footer">
+              <button id="btn-photos-generate-pdf-sidebar" class="btn btn-primary btn-block" disabled>
+                <i data-lucide="file-down"></i> Create PDF Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 3: AI DOCUMENT SCANNER WITH REAL OCR                   -->
+    <!-- ============================================================ -->
+    <section id="view-scanner" class="app-view" aria-labelledby="scanner-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <div class="view-title-wrap">
+            <h2 id="scanner-heading" class="view-title">AI Document Scanner</h2>
+            <span class="pill-tag ai-tag"><i data-lucide="scan-text"></i> OCR Text Engine</span>
+          </div>
+          <p class="view-subtitle">Capture documents via camera, apply contrast/B&W filters, extract text using Tesseract OCR, and summarize with AI.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-scanner-export-pdf" class="btn btn-primary" disabled>
+            <i data-lucide="file-check"></i> Export Scanned PDF (<span id="scanner-export-count">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <div class="scanner-layout">
+        <!-- Camera / Capture Viewport -->
+        <div class="scanner-camera-pane">
+          <div class="camera-viewport-card">
+            <div class="video-container" id="camera-container">
+              <video id="scanner-video" autoplay playsinline muted class="camera-stream"></video>
+              <canvas id="scanner-canvas" class="hidden"></canvas>
+              
+              <!-- Document Guide Overlay -->
+              <div class="camera-guide-box" id="camera-guide">
+                <div class="guide-corner top-left"></div>
+                <div class="guide-corner top-right"></div>
+                <div class="guide-corner bottom-left"></div>
+                <div class="guide-corner bottom-right"></div>
+                <div class="guide-center-hint">Align paper document inside frame</div>
+              </div>
+
+              <!-- Camera Inactive Placeholder -->
+              <div id="camera-placeholder" class="camera-placeholder">
+                <i data-lucide="camera-off" class="placeholder-icon"></i>
+                <h3>Camera is Inactive</h3>
+                <p>Click "Start Camera" to scan with your webcam, or choose an image file from your device.</p>
+                <div class="placeholder-actions">
+                  <button id="btn-start-camera" class="btn btn-primary">
+                    <i data-lucide="camera"></i> Start Camera
+                  </button>
+                  <label class="btn btn-outline" for="scanner-file-fallback">
+                    <i data-lucide="upload"></i> Upload Image
+                  </label>
+                  <input type="file" id="scanner-file-fallback" accept="image/*" class="file-input-hidden">
+                </div>
+              </div>
+            </div>
+
+            <!-- Camera Controls Bar -->
+            <div class="camera-controls-bar">
+              <button id="btn-flip-camera" class="control-btn" title="Switch Camera" disabled>
+                <i data-lucide="refresh-cw"></i>
+                <span>Flip</span>
+              </button>
+              
+              <button id="btn-capture-photo" class="capture-trigger-btn" title="Capture Document Snapshot" disabled>
+                <div class="capture-inner-circle"></div>
+              </button>
+
+              <button id="btn-stop-camera" class="control-btn" title="Stop Camera" disabled>
+                <i data-lucide="video-off"></i>
+                <span>Stop</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Enhancement & Adjustment Panel -->
+          <div class="scan-editor-card" id="scan-editor-card">
+            <div class="editor-header">
+              <h4><i data-lucide="sliders-horizontal"></i> Image Enhancements & Document Presets</h4>
+              <span class="editor-badge">Page Preview</span>
+            </div>
+
+            <div class="editor-body">
+              <!-- Filter Presets -->
+              <div class="filter-pills-row">
+                <button class="filter-pill active" data-filter="original">Original</button>
+                <button class="filter-pill" data-filter="magic-color">✨ Magic Color</button>
+                <button class="filter-pill" data-filter="bw-clean">Document B&W</button>
+                <button class="filter-pill" data-filter="high-contrast">High Contrast</button>
+                <button class="filter-pill" data-filter="grayscale">Grayscale</button>
+              </div>
+
+              <!-- Sliders -->
+              <div class="sliders-grid">
+                <div class="slider-group">
+                  <label for="slider-brightness">Brightness: <span id="val-brightness">100%</span></label>
+                  <input type="range" id="slider-brightness" min="50" max="180" value="100" class="range-slider">
+                </div>
+                <div class="slider-group">
+                  <label for="slider-contrast">Contrast: <span id="val-contrast">100%</span></label>
+                  <input type="range" id="slider-contrast" min="50" max="220" value="100" class="range-slider">
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="editor-actions">
+                <button id="btn-rotate-scan" class="btn btn-outline">
+                  <i data-lucide="rotate-cw"></i> Rotate 90°
+                </button>
+                <button id="btn-run-ocr" class="btn btn-outline" title="Extract text using Tesseract OCR">
+                  <i data-lucide="scan-text"></i> Extract Text (OCR)
+                </button>
+                <button id="btn-save-page-to-stack" class="btn btn-primary">
+                  <i data-lucide="plus-circle"></i> Add Page to Document
+                </button>
+              </div>
+            </div>
+
+            <!-- OCR Result Container -->
+            <div id="ocr-results-panel" class="ocr-results-panel hidden">
+              <div class="ocr-panel-header">
+                <h5><i data-lucide="file-text"></i> Extracted Document Text (OCR)</h5>
+                <div class="ocr-panel-actions">
+                  <button id="btn-copy-ocr" class="btn btn-sm btn-outline"><i data-lucide="copy"></i> Copy Text</button>
+                  <button id="btn-ai-summarize-ocr" class="btn btn-sm btn-ai-inline"><i data-lucide="sparkles"></i> ✨ AI Summarize</button>
+                </div>
+              </div>
+              <div id="ocr-progress-box" class="ocr-progress-box hidden">
+                <div class="ocr-progress-bar"><div class="ocr-progress-fill" id="ocr-progress-fill"></div></div>
+                <span id="ocr-progress-text">Recognizing text...</span>
+              </div>
+              <textarea id="ocr-text-output" class="form-control" rows="5" placeholder="Extracted text will appear here..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Scanned Pages Tray -->
+        <div class="scanner-sidebar-pane">
+          <div class="sidebar-card">
+            <div class="stack-header">
+              <h3><i data-lucide="book-open"></i> Scanned Pages</h3>
+              <span class="badge" id="scanned-pages-badge">0 Pages</span>
+            </div>
+
+            <div class="form-group mt-2">
+              <label for="scanner-doc-name">Document Title</label>
+              <input type="text" id="scanner-doc-name" class="form-control" value="Scanned_Document" placeholder="Name your PDF">
+            </div>
+
+            <div class="scanned-pages-tray" id="scanned-pages-tray">
+              <div class="empty-tray-message" id="empty-tray-msg">
+                <i data-lucide="file-plus"></i>
+                <p>No pages added yet. Capture or upload a page to add here.</p>
+              </div>
+            </div>
+
+            <div class="stack-footer">
+              <button id="btn-scanner-generate-sidebar" class="btn btn-primary btn-block" disabled>
+                <i data-lucide="file-down"></i> Create Scanned PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 4: AI RESUME MAKER                                      -->
+    <!-- ============================================================ -->
+    <section id="view-resume" class="app-view" aria-labelledby="resume-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <div class="view-title-wrap">
+            <h2 id="resume-heading" class="view-title">AI Resume Maker</h2>
+            <span class="pill-tag ai-tag"><i data-lucide="sparkles"></i> ATS-Ready</span>
+          </div>
+          <p class="view-subtitle">Craft a high-impact, professional resume with real-time formatted preview and instant PDF export.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-resume-sample-data" class="btn btn-outline" title="Populate form with sample professional data">
+            <i data-lucide="wand-2"></i> Fill Sample Data
+          </button>
+          <button id="btn-resume-export-pdf" class="btn btn-primary">
+            <i data-lucide="download"></i> Download Resume PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- AI Backend Notice Banner -->
+      <div class="ai-banner">
+        <div class="ai-banner-content">
+          <div class="ai-badge-icon"><i data-lucide="bot"></i></div>
+          <div>
+            <strong>AI Assistant Ready:</strong> Use the "✨ AI Polish" buttons to generate tailored professional summaries and impactful STAR-metric bullet points.
+            <span class="ai-notice-sub">All private keys stay on your backend server; frontend uses secure HTTPS endpoints with offline fallback.</span>
+          </div>
+        </div>
+        <button id="btn-ai-settings-shortcut" class="btn btn-sm btn-outline-light">AI Config</button>
+      </div>
+
+      <!-- Main Resume Builder Workspace -->
+      <div class="resume-workspace">
+        <!-- Left: Accordion Form Input -->
+        <div class="resume-form-pane">
+          <div class="accordion-container" id="resume-accordion">
+            
+            <!-- Section 1: Personal Details -->
+            <div class="accordion-item active">
+              <button class="accordion-trigger" aria-expanded="true">
+                <span class="trigger-label"><i data-lucide="user"></i> Personal & Contact Info</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="res-name">Full Name *</label>
+                    <input type="text" id="res-name" class="form-control" placeholder="e.g. Alex Morgan" value="Alex Morgan">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="res-title">Target Job Title *</label>
+                    <input type="text" id="res-title" class="form-control" placeholder="e.g. Senior Software Engineer" value="Senior Software Engineer">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="res-email">Email Address</label>
+                    <input type="email" id="res-email" class="form-control" placeholder="alex.morgan@example.com" value="alex.morgan@example.com">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="res-phone">Phone Number</label>
+                    <input type="tel" id="res-phone" class="form-control" placeholder="+1 (555) 019-2834" value="+1 (555) 019-2834">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="res-location">Location / City</label>
+                    <input type="text" id="res-location" class="form-control" placeholder="San Francisco, CA" value="San Francisco, CA">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="res-linkedin">LinkedIn / Portfolio</label>
+                    <input type="text" id="res-linkedin" class="form-control" placeholder="linkedin.com/in/alexmorgan" value="linkedin.com/in/alexmorgan">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2: Career Objective / Summary -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="file-text"></i> Career Objective / Summary</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="form-group">
+                  <div class="label-with-ai-action">
+                    <label for="res-summary">Summary Bio</label>
+                    <button type="button" class="btn-ai-inline" id="btn-ai-enhance-summary" title="Generate polished executive summary">
+                      <i data-lucide="sparkles"></i> ✨ AI Polish Summary
+                    </button>
+                  </div>
+                  <textarea id="res-summary" class="form-control" rows="4" placeholder="Brief overview of your professional background, core competencies, and career achievements...">Dynamic and results-driven Software Engineer with 6+ years of expertise in architecting high-performance web applications, distributed cloud systems, and intelligent automated workflows. Proven track record of scaling user-facing applications to 1M+ active users while optimizing database throughput by 42%.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Work Experience -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="briefcase"></i> Work Experience</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="experience-items-container"></div>
+                <button type="button" id="btn-add-experience" class="btn btn-outline btn-block mt-2">
+                  <i data-lucide="plus"></i> Add Work Position
+                </button>
+              </div>
+            </div>
+
+            <!-- Section 4: Education -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="graduation-cap"></i> Education</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="education-items-container"></div>
+                <button type="button" id="btn-add-education" class="btn btn-outline btn-block mt-2">
+                  <i data-lucide="plus"></i> Add Education Degree
+                </button>
+              </div>
+            </div>
+
+            <!-- Section 5: Skills & Competencies -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="code-2"></i> Skills & Core Competencies</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="form-group">
+                  <div class="label-with-ai-action">
+                    <label for="res-skills-technical">Technical Skills (comma-separated)</label>
+                    <button type="button" class="btn-ai-inline" id="btn-ai-suggest-skills">
+                      <i data-lucide="sparkles"></i> ✨ Suggest Skills
+                    </button>
+                  </div>
+                  <textarea id="res-skills-technical" class="form-control" rows="2" placeholder="e.g. JavaScript, TypeScript, React, Node.js, Python, PostgreSQL, Docker, AWS">JavaScript (ES6+), TypeScript, React, Next.js, Node.js, Python, PostgreSQL, Redis, Docker, Kubernetes, AWS, REST APIs, GraphQL, Git</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="res-skills-soft">Methodologies & Soft Skills</label>
+                  <input type="text" id="res-skills-soft" class="form-control" placeholder="e.g. Agile/Scrum, CI/CD, Technical Leadership" value="System Design, Agile/Scrum, Team Leadership, CI/CD Automation, Test-Driven Development">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 6: Key Projects & Internships -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="folder-git-2"></i> Key Projects & Internships</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="project-items-container"></div>
+                <button type="button" id="btn-add-project" class="btn btn-outline btn-block mt-2">
+                  <i data-lucide="plus"></i> Add Project / Internship
+                </button>
+              </div>
+            </div>
+
+            <!-- Section 7: Certifications & Awards -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="award"></i> Certifications & Awards</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="certification-items-container"></div>
+                <button type="button" id="btn-add-cert" class="btn btn-outline btn-block mt-2">
+                  <i data-lucide="plus"></i> Add Certification
+                </button>
+              </div>
+            </div>
+
+            <!-- Section 8: Styling & Templates -->
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span class="trigger-label"><i data-lucide="palette"></i> Design & Palette</span>
+                <i data-lucide="chevron-down" class="accordion-arrow"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="form-group">
+                  <label>Accent Color</label>
+                  <div class="color-palette-picker">
+                    <button class="palette-swatch active" data-color="#10b981" style="background-color: #10b981;" title="Emerald Green"></button>
+                    <button class="palette-swatch" data-color="#059669" style="background-color: #059669;" title="Forest Green"></button>
+                    <button class="palette-swatch" data-color="#0284c7" style="background-color: #0284c7;" title="Navy Ocean"></button>
+                    <button class="palette-swatch" data-color="#4f46e5" style="background-color: #4f46e5;" title="Modern Indigo"></button>
+                    <button class="palette-swatch" data-color="#0f172a" style="background-color: #0f172a;" title="Executive Slate"></button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="res-template-select">Layout Style</label>
+                  <select id="res-template-select" class="form-control">
+                    <option value="modern-green" selected>Modern Accent (Recommended)</option>
+                    <option value="minimal-clean">Clean Minimalist</option>
+                    <option value="executive-serif">Executive Corporate</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Live Formatted Resume Preview -->
+        <div class="resume-preview-pane">
+          <div class="preview-toolbar">
+            <span class="preview-title"><i data-lucide="eye"></i> Live A4 Formatted Preview</span>
+            <div class="preview-controls">
+              <button id="btn-resume-preview-print" class="icon-btn-sm" title="Print Resume">
+                <i data-lucide="printer"></i>
+              </button>
+              <button id="btn-resume-preview-export" class="btn btn-sm btn-primary">
+                <i data-lucide="file-down"></i> Export PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Scaled A4 Paper Sheet Wrapper -->
+          <div class="paper-viewport">
+            <div class="a4-resume-sheet" id="resume-sheet">
+              <header class="sheet-header" id="sheet-header">
+                <h1 class="sheet-name" id="sheet-name">Alex Morgan</h1>
+                <h2 class="sheet-title" id="sheet-title">Senior Software Engineer</h2>
+                <div class="sheet-contact-line" id="sheet-contact">
+                  <span id="sheet-email"><i data-lucide="mail"></i> alex.morgan@example.com</span>
+                  <span class="sheet-sep">•</span>
+                  <span id="sheet-phone"><i data-lucide="phone"></i> +1 (555) 019-2834</span>
+                  <span class="sheet-sep">•</span>
+                  <span id="sheet-loc"><i data-lucide="map-pin"></i> San Francisco, CA</span>
+                  <span class="sheet-sep">•</span>
+                  <span id="sheet-link"><i data-lucide="globe"></i> linkedin.com/in/alexmorgan</span>
+                </div>
+              </header>
+
+              <section class="sheet-section" id="sheet-sec-summary">
+                <h3 class="sheet-section-title">Career Objective & Summary</h3>
+                <p class="sheet-text" id="sheet-summary">
+                  Dynamic and results-driven Software Engineer with 6+ years of expertise in architecting high-performance web applications, distributed cloud systems, and intelligent automated workflows.
+                </p>
+              </section>
+
+              <section class="sheet-section" id="sheet-sec-exp">
+                <h3 class="sheet-section-title">Work Experience</h3>
+                <div class="sheet-entries-list" id="sheet-exp-list"></div>
+              </section>
+
+              <section class="sheet-section" id="sheet-sec-edu">
+                <h3 class="sheet-section-title">Education</h3>
+                <div class="sheet-entries-list" id="sheet-edu-list"></div>
+              </section>
+
+              <section class="sheet-section" id="sheet-sec-skills">
+                <h3 class="sheet-section-title">Skills & Expertise</h3>
+                <div class="sheet-skills-content">
+                  <p><strong>Technical:</strong> <span id="sheet-skills-tech">JavaScript, React, Node.js, Python, PostgreSQL, AWS</span></p>
+                  <p><strong>Methodologies:</strong> <span id="sheet-skills-soft">System Design, Agile/Scrum, CI/CD Automation</span></p>
+                </div>
+              </section>
+
+              <section class="sheet-section" id="sheet-sec-projects">
+                <h3 class="sheet-section-title">Key Projects & Internships</h3>
+                <div class="sheet-entries-list" id="sheet-proj-list"></div>
+              </section>
+
+              <section class="sheet-section" id="sheet-sec-certs">
+                <h3 class="sheet-section-title">Certifications & Awards</h3>
+                <div class="sheet-entries-list" id="sheet-cert-list"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 5: MERGE PDF                                            -->
+    <!-- ============================================================ -->
+    <section id="view-merge" class="app-view" aria-labelledby="merge-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <h2 id="merge-heading" class="view-title">Merge PDF Files</h2>
+          <p class="view-subtitle">Select two or more PDF files, arrange their order, and merge them into a single PDF document.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-merge-clear" class="btn btn-outline-danger" disabled>
+            <i data-lucide="trash"></i> Clear All
+          </button>
+          <button id="btn-execute-merge" class="btn btn-primary" disabled>
+            <i data-lucide="combine"></i> Merge PDFs Now
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-layout">
+        <div class="tool-main-col">
+          <div class="upload-dropzone" id="merge-dropzone">
+            <input type="file" id="merge-file-input" accept="application/pdf" multiple class="file-input-hidden">
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <i data-lucide="files"></i>
+              </div>
+              <h3 class="dropzone-title">Drop PDF files here or <span class="highlight-link">Browse files</span></h3>
+              <p class="dropzone-hint">Upload 2 or more PDF documents to merge into one file</p>
+              <button type="button" class="btn btn-outline dropzone-btn" onclick="document.getElementById('merge-file-input').click()">
+                <i data-lucide="plus"></i> Select PDF Files
+              </button>
+            </div>
+          </div>
+
+          <div class="queue-wrapper">
+            <div class="queue-header">
+              <span class="queue-title" id="merge-queue-count">0 PDF files loaded</span>
+              <span class="gallery-hint"><i data-lucide="info"></i> Top file will be first in merged document</span>
+            </div>
+            <div class="pdf-files-list" id="merge-files-list"></div>
+          </div>
+        </div>
+
+        <div class="tool-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title"><i data-lucide="settings-2"></i> Merge Output Settings</h3>
+
+            <div class="form-group">
+              <label for="merge-output-name">Output Document Name</label>
+              <input type="text" id="merge-output-name" class="form-control" value="Merged_Document" placeholder="Name your merged file">
+            </div>
+
+            <div class="summary-box" id="merge-summary-box">
+              <div class="summary-row">
+                <span>Total Documents:</span>
+                <strong id="merge-sum-docs">0</strong>
+              </div>
+              <div class="summary-row">
+                <span>Total Combined Pages:</span>
+                <strong id="merge-sum-pages">0</strong>
+              </div>
+              <div class="summary-row">
+                <span>Engine:</span>
+                <span class="badge">pdf-lib (Lossless)</span>
+              </div>
+            </div>
+
+            <div class="action-card-footer">
+              <button id="btn-execute-merge-sidebar" class="btn btn-primary btn-block" disabled>
+                <i data-lucide="combine"></i> Merge & Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 6: EDIT PDF & PDF TOOLS (PAGE MANAGER / ROTATE / UNDO)  -->
+    <!-- ============================================================ -->
+    <section id="view-edit-pdf" class="app-view" aria-labelledby="edit-pdf-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <h2 id="edit-pdf-heading" class="view-title">Edit PDF Pages</h2>
+          <p class="view-subtitle">Inspect page thumbnails, rotate orientation, reorder sequence, and undo edits safely.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-pdftools-undo" class="btn btn-outline" disabled title="Undo last page edit">
+            <i data-lucide="undo-2"></i> Undo
+          </button>
+          <button id="btn-pdftools-select-all" class="btn btn-outline" disabled>
+            <i data-lucide="check-square"></i> Select All
+          </button>
+          <button id="btn-pdftools-delete-selected" class="btn btn-outline-danger" disabled>
+            <i data-lucide="trash-2"></i> Delete Selected (<span id="pdftools-selected-count">0</span>)
+          </button>
+          <button id="btn-pdftools-save" class="btn btn-primary" disabled>
+            <i data-lucide="save"></i> Save Modified PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-layout">
+        <div class="tool-main-col">
+          <div class="upload-dropzone" id="pdftools-dropzone">
+            <input type="file" id="pdftools-file-input" accept="application/pdf" class="file-input-hidden">
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <i data-lucide="layers"></i>
+              </div>
+              <h3 class="dropzone-title">Upload a PDF to edit its pages or <span class="highlight-link">Browse file</span></h3>
+              <p class="dropzone-hint">View high-resolution thumbnails, reorder, rotate, and delete pages</p>
+              <button type="button" class="btn btn-outline dropzone-btn" onclick="document.getElementById('pdftools-file-input').click()">
+                <i data-lucide="file-up"></i> Choose PDF File
+              </button>
+            </div>
+          </div>
+
+          <div class="pages-manager-wrapper" id="pdftools-manager-wrapper">
+            <div class="gallery-toolbar">
+              <div class="pdftools-doc-info" id="pdftools-doc-info">
+                <span id="pdftools-filename">No file selected</span>
+                <span class="meta-dot">•</span>
+                <span id="pdftools-page-count">0 pages</span>
+              </div>
+              <div class="toolbar-bulk-actions">
+                <button id="btn-pdftools-rotate-all" class="btn btn-sm btn-outline" disabled>
+                  <i data-lucide="rotate-cw"></i> Rotate All 90°
+                </button>
+              </div>
+            </div>
+
+            <div class="page-thumbnails-grid" id="pdftools-thumbnails-grid"></div>
+          </div>
+        </div>
+
+        <div class="tool-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title"><i data-lucide="sliders"></i> Page Operations</h3>
+
+            <div class="form-group">
+              <label for="pdftools-output-name">Output Name</label>
+              <input type="text" id="pdftools-output-name" class="form-control" value="Edited_Document" placeholder="Enter output filename">
+            </div>
+
+            <div class="info-alert">
+              <i data-lucide="info"></i>
+              <span>Click any page thumbnail to select/deselect it. You can rotate individual pages or delete unwanted pages.</span>
+            </div>
+
+            <div class="operations-btn-stack">
+              <button id="btn-pdftools-extract" class="btn btn-outline btn-block" disabled>
+                <i data-lucide="external-link"></i> Extract Selected Pages Only
+              </button>
+              <button id="btn-pdftools-save-sidebar" class="btn btn-primary btn-block" disabled>
+                <i data-lucide="file-check"></i> Export New PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- VIEW 7: COMPRESS PDF                                         -->
+    <!-- ============================================================ -->
+    <section id="view-compress" class="app-view" aria-labelledby="compress-heading">
+      <div class="view-header">
+        <div class="view-header-main">
+          <button class="back-link-btn" data-back="home">
+            <i data-lucide="chevron-left"></i> Back to Dashboard
+          </button>
+          <h2 id="compress-heading" class="view-title">Compress PDF</h2>
+          <p class="view-subtitle">Reduce PDF document size for email attachments and fast uploads with adjustable compression levels.</p>
+        </div>
+        <div class="view-header-actions">
+          <button id="btn-execute-compress" class="btn btn-primary" disabled>
+            <i data-lucide="minimize-2"></i> Compress Document Now
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-layout">
+        <div class="tool-main-col">
+          <div class="upload-dropzone" id="compress-dropzone">
+            <input type="file" id="compress-file-input" accept="application/pdf" class="file-input-hidden">
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <i data-lucide="minimize-2"></i>
+              </div>
+              <h3 class="dropzone-title">Upload PDF to compress or <span class="highlight-link">Browse file</span></h3>
+              <p class="dropzone-hint">Optimizes image resolution and removes bloat while maintaining document readability</p>
+              <button type="button" class="btn btn-outline dropzone-btn" onclick="document.getElementById('compress-file-input').click()">
+                <i data-lucide="file-up"></i> Choose PDF File
+              </button>
+            </div>
+          </div>
+
+          <!-- Document Compression Card -->
+          <div id="compress-details-card" class="sidebar-card hidden">
+            <h3 class="sidebar-title"><i data-lucide="file-check"></i> Selected Document</h3>
+            <div class="file-summary-badge mb-3">
+              <i data-lucide="file-text" class="large-pdf-icon"></i>
+              <div class="file-summary-details">
+                <strong id="compress-orig-name">document.pdf</strong>
+                <div class="file-summary-sub">
+                  <span>Original Size: <strong id="compress-orig-size">0 KB</strong></span>
+                  <span class="meta-dot">•</span>
+                  <span id="compress-orig-pages">0 pages</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="compression-presets-grid">
+              <div class="preset-card active" data-preset="medium">
+                <div class="preset-radio"></div>
+                <div class="preset-info">
+                  <strong>Recommended (Balanced)</strong>
+                  <span>Standard quality, good compression (~50-70% reduction)</span>
+                </div>
+              </div>
+              <div class="preset-card" data-preset="low">
+                <div class="preset-radio"></div>
+                <div class="preset-info">
+                  <strong>Extreme Compression</strong>
+                  <span>Compact file size, ideal for tight email limits (~75% reduction)</span>
+                </div>
+              </div>
+              <div class="preset-card" data-preset="high">
+                <div class="preset-radio"></div>
+                <div class="preset-info">
+                  <strong>High Quality</strong>
+                  <span>Subtle compression with maximum visual fidelity (~30% reduction)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Compression Results Box (shown after compress) -->
+            <div id="compression-results-box" class="compression-results-box hidden">
+              <div class="results-savings-badge">
+                <i data-lucide="arrow-down-circle"></i>
+                <span id="compress-savings-pct">45% Smaller</span>
+              </div>
+              <div class="results-stats-row">
+                <div>Original: <strong id="res-orig-size">2.4 MB</strong></div>
+                <i data-lucide="arrow-right"></i>
+                <div>Compressed: <strong id="res-new-size" class="text-success">1.1 MB</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title"><i data-lucide="sliders"></i> Compression Settings</h3>
+            <div class="form-group">
+              <label for="compress-output-name">Output Name</label>
+              <input type="text" id="compress-output-name" class="form-control" value="Compressed_Document">
+            </div>
+            <div class="form-group">
+              <label for="compress-quality-slider">Quality Level: <span id="val-compress-quality">70%</span></label>
+              <input type="range" id="compress-quality-slider" min="30" max="95" value="70" class="range-slider">
+            </div>
+            <div class="action-card-footer">
+              <button id="btn-execute-compress-sidebar" class="btn btn-primary btn-block" disabled>
+                <i data-lucide="minimize-2"></i> Compress & Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- MOBILE BOTTOM NAVIGATION BAR                                 -->
+  <!-- ============================================================ -->
+  <nav class="bottom-nav-bar" id="bottom-nav" aria-label="Mobile Navigation">
+    <button class="bottom-nav-item active" data-nav="home">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="photos-pdf">
+      <i data-lucide="image"></i>
+      <span>Photos</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="scanner">
+      <div class="bottom-nav-accent-btn">
+        <i data-lucide="camera"></i>
+      </div>
+      <span>Scan</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="resume">
+      <i data-lucide="briefcase"></i>
+      <span>Resume</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="edit-pdf">
+      <i data-lucide="layers"></i>
+      <span>Tools</span>
+    </button>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- MODALS & DIALOGS                                             -->
+  <!-- ============================================================ -->
+
+  <!-- Modal 1: Document Export / Preview Modal -->
+  <div class="modal-overlay" id="modal-export" role="dialog" aria-modal="true" aria-labelledby="export-modal-title">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i data-lucide="check-circle-2"></i></div>
+          <h3 id="export-modal-title">Document Ready</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-export" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="export-preview-card">
+          <div class="file-summary-badge">
+            <i data-lucide="file-text" class="large-pdf-icon"></i>
+            <div class="file-summary-details">
+              <strong id="export-file-title">Green_PDF_Document.pdf</strong>
+              <div class="file-summary-sub">
+                <span id="export-file-size">0 KB</span>
+                <span class="meta-dot">•</span>
+                <span id="export-file-pages">1 page</span>
+                <span class="meta-dot">•</span>
+                <span class="badge badge-success">Processed Locally</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-action-grid">
+            <button id="btn-export-download" class="btn btn-primary btn-lg">
+              <i data-lucide="download"></i> Download PDF
+            </button>
+            <button id="btn-export-print" class="btn btn-outline btn-lg">
+              <i data-lucide="printer"></i> Print Document
+            </button>
+            <button id="btn-export-share" class="btn btn-outline btn-lg">
+              <i data-lucide="share-2"></i> Share PDF
+            </button>
+            <button id="btn-export-open" class="btn btn-outline btn-lg">
+              <i data-lucide="external-link"></i> View in Browser
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close-modal="modal-export">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Settings Modal -->
+  <div class="modal-overlay" id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i data-lucide="settings"></i></div>
+          <h3 id="settings-modal-title">App Settings</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-settings" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Theme Selection -->
+        <div class="settings-section">
+          <h4 class="settings-section-title"><i data-lucide="palette"></i> Appearance Theme</h4>
+          <div class="theme-switch-pills">
+            <button class="theme-pill" data-theme-choice="light">
+              <i data-lucide="sun"></i> Light
+            </button>
+            <button class="theme-pill" data-theme-choice="dark">
+              <i data-lucide="moon"></i> Dark
+            </button>
+            <button class="theme-pill active" data-theme-choice="system">
+              <i data-lucide="laptop"></i> System
+            </button>
+          </div>
+        </div>
+
+        <!-- Language Preference -->
+        <div class="settings-section">
+          <h4 class="settings-section-title"><i data-lucide="languages"></i> App Language Preference</h4>
+          <p class="settings-help">Select your interface language.</p>
+          <select id="settings-language" class="form-control">
+            <option value="en" selected>English (US / UK)</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="fr">Français (French)</option>
+            <option value="de">Deutsch (German)</option>
+            <option value="pt">Português (Portuguese)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="ja">日本語 (Japanese)</option>
+          </select>
+        </div>
+
+        <!-- AI Backend Settings -->
+        <div class="settings-section">
+          <h4 class="settings-section-title"><i data-lucide="sparkles"></i> AI Backend Integration Point</h4>
+          <p class="settings-help">
+            Connect your secure backend proxy (Gemini, OpenAI, or Claude). API keys should never be placed in frontend code.
+          </p>
+          <div class="form-group">
+            <label for="ai-endpoint-url">AI Backend Endpoint URL</label>
+            <input type="url" id="ai-endpoint-url" class="form-control" placeholder="https://api.yourdomain.com/v1/resume-enhance" value="">
+            <span class="form-hint">Leave blank to use the built-in smart offline assistant mock.</span>
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="ai-mock-fallback" checked>
+              <span>Enable instant offline AI fallback if backend is unreachable</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- App & Version Information -->
+        <div class="settings-section">
+          <h4 class="settings-section-title"><i data-lucide="info"></i> Version & Android Package</h4>
+          <div class="summary-box">
+            <div class="summary-row">
+              <span>App Name:</span>
+              <strong>Green PDF AI</strong>
+            </div>
+            <div class="summary-row">
+              <span>Package ID:</span>
+              <code>com.greenpdf.ai</code>
+            </div>
+            <div class="summary-row">
+              <span>Version:</span>
+              <span>1.0.0 (Capacitor + PWA)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Reset -->
+        <div class="settings-section">
+          <h4 class="settings-section-title text-danger"><i data-lucide="trash-2"></i> Reset Application</h4>
+          <p class="settings-help">Clear session documents, resume drafts, and stored non-sensitive preferences.</p>
+          <button id="btn-reset-app-data" class="btn btn-outline-danger btn-sm">
+            Reset All Local Data
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-save-settings" class="btn btn-primary">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Feedback Form Modal -->
+  <div class="modal-overlay" id="modal-feedback" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i data-lucide="message-square-heart"></i></div>
+          <h3 id="feedback-modal-title">Send Feedback</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-feedback" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="form-feedback" class="modal-body">
+        <p class="settings-help">Help us improve Green PDF AI! Feedback is saved locally and can be dispatched to your connected support service.</p>
+
+        <div class="form-group">
+          <label for="feedback-category">Feedback Category</label>
+          <select id="feedback-category" class="form-control" required>
+            <option value="feature">💡 Feature Request</option>
+            <option value="bug">🐛 Bug Report</option>
+            <option value="usability">✨ Usability / Design</option>
+            <option value="praise">❤️ Compliment / General</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>How satisfied are you with Green PDF AI?</label>
+          <div class="rating-stars" id="feedback-stars">
+            <button type="button" class="star-btn active" data-rating="1">★</button>
+            <button type="button" class="star-btn active" data-rating="2">★</button>
+            <button type="button" class="star-btn active" data-rating="3">★</button>
+            <button type="button" class="star-btn active" data-rating="4">★</button>
+            <button type="button" class="star-btn active" data-rating="5">★</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="feedback-name">Your Name (Optional)</label>
+          <input type="text" id="feedback-name" class="form-control" placeholder="e.g. Taylor">
+        </div>
+
+        <div class="form-group">
+          <label for="feedback-email">Email (Optional, for replies)</label>
+          <input type="email" id="feedback-email" class="form-control" placeholder="taylor@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="feedback-message">Your Feedback / Comments *</label>
+          <textarea id="feedback-message" class="form-control" rows="4" placeholder="Tell us what you liked or what we should add next..." required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close-modal="modal-feedback">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <i data-lucide="send"></i> Submit Feedback
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: About Modal -->
+  <div class="modal-overlay" id="modal-about" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i data-lucide="info"></i></div>
+          <h3 id="about-modal-title">About Green PDF AI</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-about" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body about-body">
+        <div class="about-hero">
+          <div class="about-logo"><i data-lucide="file-text"></i></div>
+          <h4>Green PDF AI Studio</h4>
+          <span class="about-ver">Version 1.0.0 • Android Package: <code>com.greenpdf.ai</code></span>
+        </div>
+        <p>
+          Green PDF AI is an all-in-one mobile-responsive document workstation engineered for privacy, speed, and simplicity. Built with pure modern HTML, CSS, JavaScript, and packaged for Android using Capacitor.
+        </p>
+        <div class="about-features-list">
+          <div class="about-feat-item"><i data-lucide="check"></i> <strong>Photos to PDF:</strong> High-resolution batch image conversion.</div>
+          <div class="about-feat-item"><i data-lucide="check"></i> <strong>AI Document Scanner:</strong> Camera stream, Otsu filters, & Tesseract.js OCR.</div>
+          <div class="about-feat-item"><i data-lucide="check"></i> <strong>AI Resume Maker:</strong> ATS-friendly dynamic builder with formatted A4 export.</div>
+          <div class="about-feat-item"><i data-lucide="check"></i> <strong>Merge & Edit PDF:</strong> Lossless client-side merging & page management.</div>
+          <div class="about-feat-item"><i data-lucide="check"></i> <strong>Compress PDF:</strong> Client-side JPEG rendering & PDF stream optimization.</div>
+        </div>
+        <p class="about-credits">
+          Libraries: <code>jsPDF</code>, <code>pdf-lib</code>, <code>pdf.js</code>, <code>tesseract.js</code>, <code>lucide</code>, and <code>@capacitor/core</code>.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-close-modal="modal-about">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Privacy Policy Modal -->
+  <div class="modal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <div class="modal-dialog modal-md">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i data-lucide="shield-check"></i></div>
+          <h3 id="privacy-modal-title">Privacy Policy & Security</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-privacy" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body privacy-body">
+        <div class="privacy-highlight-box">
+          <i data-lucide="lock"></i>
+          <div>
+            <strong>100% Client-Side Privacy</strong>
+            <p>All document operations (merging, scanning, converting, and rendering) occur within your local browser/device memory sandbox.</p>
+          </div>
+        </div>
+
+        <h4>1. Local File Processing</h4>
+        <p>When you select photos, PDFs, or use your camera, binary data is processed using browser Canvas and WebAssembly/JavaScript engines (<code>jsPDF</code> and <code>pdf-lib</code>). Your files are not uploaded to unauthorized servers.</p>
+
+        <h4>2. Camera Permission</h4>
+        <p>The Document Scanner requests camera permission only when you click "Start Camera". Video frames are processed locally on your device.</p>
+
+        <h4>3. Local Storage Policy</h4>
+        <p>We use <code>localStorage</code> strictly for non-sensitive UI settings such as theme preference and language choice.</p>
+
+        <h4>4. AI & Backend Security</h4>
+        <p>Frontend code contains no hardcoded private API keys. When connecting to an optional AI endpoint, requests are sent through your configured secure backend proxy.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-close-modal="modal-privacy">I Understand</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Confirmation Dialog Modal -->
+  <div class="modal-overlay" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge danger"><i data-lucide="alert-triangle"></i></div>
+          <h3 id="confirm-modal-title">Confirm Action</h3>
+        </div>
+        <button class="modal-close-btn" data-close-modal="modal-confirm" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="confirm-modal-message">Are you sure you want to proceed? This action cannot be undone.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-confirm-cancel" class="btn btn-ghost" data-close-modal="modal-confirm">Cancel</button>
+        <button id="btn-confirm-proceed" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Hidden Print Iframe -->
+  <iframe id="print-iframe" class="hidden-print-iframe" title="PDF Print Frame"></iframe>
+
+  <script src="script.js"></script>
+</body>
+</html>

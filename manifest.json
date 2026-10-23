@@ -1,0 +1,48 @@
+{
+  "name": "Green PDF AI - Modern PDF Studio & Resume Maker",
+  "short_name": "Green PDF AI",
+  "description": "Complete mobile-responsive PDF utility: Photos to PDF, AI Resume Maker, Document Scanner with OCR, Merge, Edit, and Compress PDF.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "id": "com.greenpdf.ai",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Scanner",
+      "url": "./index.html#scanner",
+      "description": "Scan documents with camera"
+    },
+    {
+      "name": "Resume Maker",
+      "url": "./index.html#resume",
+      "description": "Create AI formatted resume"
+    },
+    {
+      "name": "Merge PDF",
+      "url": "./index.html#merge",
+      "description": "Merge multiple PDF files"
+    }
+  ]
+}
