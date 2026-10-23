@@ -1,46 +1,105 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
+    <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="45%" stop-color="#064e3b" />
       <stop offset="100%" stop-color="#047857" />
     </linearGradient>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fbbf24" />
-      <stop offset="100%" stop-color="#d97706" />
+
+    <!-- Emerald Teal Accent -->
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.25" />
+
+    <!-- Scan Beam Gradient -->
+    <linearGradient id="scanBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0" />
+      <stop offset="20%" stop-color="#34d399" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#a7f3d0" stop-opacity="1" />
+      <stop offset="80%" stop-color="#34d399" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Sparkle Gold Gradient -->
+    <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+
+    <!-- Soft Drop Shadow -->
+    <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#000" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  
-  <!-- Rounded Base Background -->
-  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
-  
-  <!-- Outer Ring Accent -->
-  <rect x="16" y="16" width="480" height="480" rx="98" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.2" />
+
+  <!-- Squircle Base -->
+  <rect width="512" height="512" rx="116" fill="url(#bgGrad)" />
+  <rect x="12" y="12" width="488" height="488" rx="104" fill="none" stroke="#34d399" stroke-width="2.5" stroke-opacity="0.25" />
 
   <!-- Document Sheet -->
-  <g filter="url(#shadow)">
-    <!-- Main Sheet -->
-    <path d="M144 100 H300 L380 180 V400 C380 417.67 365.67 432 348 432 H144 C126.33 432 112 417.67 112 400 V132 C112 114.33 126.33 100 144 100 Z" fill="#ffffff" />
-    
-    <!-- Fold Corner -->
-    <path d="M300 100 V172 C300 176.4 303.6 180 308 180 H380 Z" fill="#e2e8f0" />
-    
-    <!-- Content Lines -->
-    <rect x="156" y="228" width="200" height="18" rx="9" fill="#10b981" />
-    <rect x="156" y="270" width="160" height="14" rx="7" fill="#94a3b8" />
-    <rect x="156" y="302" width="180" height="14" rx="7" fill="#94a3b8" />
-    <rect x="156" y="334" width="120" height="14" rx="7" fill="#cbd5e1" />
+  <g filter="url(#cardShadow)">
+    <path d="M140 108 H300 L372 180 V396 C372 413.67 357.67 428 340 428 H140 C122.33 428 108 413.67 108 396 V140 C108 122.33 122.33 108 140 108 Z" fill="#ffffff" />
+    <path d="M300 108 V168 C300 174.63 305.37 180 312 180 H372 Z" fill="#cbd5e1" />
 
-    <!-- Green Badge on Page -->
-    <rect x="156" y="370" width="70" height="26" rx="6" fill="#10b981" />
-    <text x="191" y="388" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">PDF</text>
+    <!-- Content Lines -->
+    <rect x="148" y="210" width="130" height="12" rx="6" fill="#10b981" opacity="0.9" />
+    <rect x="148" y="236" width="180" height="10" rx="5" fill="#94a3b8" />
+    <rect x="148" y="260" width="150" height="10" rx="5" fill="#94a3b8" />
+    <rect x="148" y="284" width="170" height="10" rx="5" fill="#cbd5e1" />
   </g>
 
-  <!-- AI Sparkle Orb in Top Right -->
-  <circle cx="396" cy="116" r="44" fill="url(#goldGrad)" filter="url(#shadow)" />
-  <path d="M396 90 L402 108 L420 114 L402 120 L396 138 L390 120 L372 114 L390 108 Z" fill="#ffffff" />
-  <circle cx="424" cy="94" r="5" fill="#ffffff" />
-  <circle cx="372" cy="136" r="4" fill="#ffffff" />
+  <!-- The Lens Aperture / Focus Ring (Over Document) -->
+  <g filter="url(#cardShadow)">
+    <!-- Outer Glass Ring -->
+    <circle cx="290" cy="300" r="102" fill="#0f172a" fill-opacity="0.9" stroke="url(#lensGrad)" stroke-width="8" />
+    
+    <!-- Inner Lens Ring -->
+    <circle cx="290" cy="300" r="76" fill="#022c22" stroke="#34d399" stroke-width="3" stroke-dasharray="8 6" />
+    
+    <!-- Lens Pupil Reflection -->
+    <circle cx="290" cy="300" r="48" fill="#047857" fill-opacity="0.75" />
+    <ellipse cx="274" cy="284" rx="20" ry="12" fill="#ffffff" fill-opacity="0.28" transform="rotate(-30 274 284)" />
+    
+    <!-- Aperture Blades (Optics styling) -->
+    <path d="M290 224 L305 255 M356 262 L332 284 M356 338 L326 332 M290 376 L275 345 M224 338 L248 316 M224 262 L254 268" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" opacity="0.6" />
+
+    <!-- Focus Target Crosshairs -->
+    <circle cx="290" cy="300" r="8" fill="#a7f3d0" />
+    <line x1="290" y1="284" x2="290" y2="274" stroke="#a7f3d0" stroke-width="3" stroke-linecap="round" />
+    <line x1="290" y1="316" x2="290" y2="326" stroke="#a7f3d0" stroke-width="3" stroke-linecap="round" />
+    <line x1="274" y1="300" x2="264" y2="300" stroke="#a7f3d0" stroke-width="3" stroke-linecap="round" />
+    <line x1="306" y1="300" x2="316" y2="300" stroke="#a7f3d0" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- Active Scan Beam -->
+  <g filter="url(#glow)">
+    <rect x="76" y="246" width="360" height="4" rx="2" fill="url(#scanBeam)" />
+  </g>
+
+  <!-- Viewfinder Corner Brackets -->
+  <path d="M72 100 H104 V68" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M440 100 H408 V68" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M72 412 H104 V444" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M440 412 H408 V444" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- AI Sparkles -->
+  <g filter="url(#glow)">
+    <!-- Primary Sparkle Top Right -->
+    <circle cx="408" cy="116" r="38" fill="url(#sparkleGrad)" />
+    <path d="M408 92 L414 108 L430 114 L414 120 L408 136 L402 120 L386 114 L402 108 Z" fill="#ffffff" />
+    
+    <!-- Mini Sparkles -->
+    <circle cx="438" cy="88" r="4.5" fill="#fde047" />
+    <circle cx="376" cy="144" r="3.5" fill="#fde047" />
+    <circle cx="96" cy="172" r="4" fill="#a7f3d0" />
+  </g>
 </svg>

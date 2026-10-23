@@ -1,9 +1,9 @@
 /**
- * Green PDF AI - Service Worker
+ * PageLens - Service Worker
  * Enables offline caching, background asset syncing, and PWA installability
  */
 
-const CACHE_NAME = 'green-pdf-ai-v1.0.0';
+const CACHE_NAME = 'pagelens-v1.1.0';
 const STATIC_ASSETS = [
   './',
   './index.html',

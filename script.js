@@ -1,7 +1,7 @@
 /**
  * ============================================================================
- * GREEN PDF AI - SMART MOBILE PDF STUDIO & RESUME MAKER
- * Package ID: com.greenpdf.ai
+ * PAGELENS - SMART MOBILE DOCUMENT STUDIO & AI PDF LENS
+ * Package ID: com.pagelens.ai
  * Pure Vanilla JavaScript (ES6+) Implementation
  * 100% Client-Side Private Document Processing + PWA & Capacitor Ready
  * ============================================================================
@@ -512,7 +512,7 @@
     });
 
     // Update Header
-    DOM.activeViewName.textContent = viewTitles[viewId] || 'Green PDF AI';
+    DOM.activeViewName.textContent = viewTitles[viewId] || 'PageLens';
     if (viewId === 'home') {
       DOM.btnHeaderBack.classList.add('hidden');
     } else {
@@ -733,7 +733,7 @@
     DOM.btnResetAppData.addEventListener('click', () => {
       showConfirmDialog({
         title: 'Reset Local Application Data?',
-        message: 'This will clear cached document history, custom preferences, and reset Green PDF AI.',
+        message: 'This will clear cached document history, custom preferences, and reset PageLens.',
         confirmText: 'Reset Everything',
         onConfirm: () => {
           try {
@@ -753,8 +753,8 @@
      ========================================================================== */
   async function handleShareApp() {
     const shareData = {
-      title: 'Green PDF AI — Mobile PDF Studio & Resume Maker',
-      text: 'Check out Green PDF AI: Private client-side PDF maker, camera document scanner with OCR, ATS resume builder, and PDF tools!',
+      title: 'PageLens — Smart Document Studio & AI PDF Lens',
+      text: 'Check out PageLens: Private client-side PDF maker, camera document scanner with OCR, ATS resume studio, and PDF tools!',
       url: window.location.href
     };
 
@@ -3334,7 +3334,7 @@
 
     if (window.lucide) window.lucide.createIcons();
 
-    console.log('Green PDF AI initialized successfully. Package ID: com.greenpdf.ai');
+    console.log('PageLens initialized successfully. Package ID: com.pagelens.ai');
   }
 
   if (document.readyState === 'loading') {

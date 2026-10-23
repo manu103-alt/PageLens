@@ -1,6 +1,6 @@
 {
-  "appId": "com.greenpdf.ai",
-  "appName": "Green PDF AI",
+  "appId": "com.pagelens.ai",
+  "appName": "PageLens",
   "webDir": ".",
   "bundledWebRuntime": false,
   "server": {
@@ -17,13 +17,13 @@
     "SplashScreen": {
       "launchShowDuration": 1500,
       "launchAutoHide": true,
-      "backgroundColor": "#10b981",
+      "backgroundColor": "#059669",
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP"
     },
     "StatusBar": {
       "style": "DARK",
-      "backgroundColor": "#10b981"
+      "backgroundColor": "#059669"
     }
   },
   "android": {

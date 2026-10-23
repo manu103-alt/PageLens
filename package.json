@@ -1,17 +1,17 @@
 {
-  "name": "green-pdf-ai",
-  "version": "1.0.0",
-  "description": "Green PDF AI - Modern Mobile-Responsive Android APK & Web App for PDF Utility, Document Scanner, and AI Resume Builder",
+  "name": "pagelens",
+  "version": "1.1.0",
+  "description": "PageLens - Intelligent Client-Side Document Studio, Camera Scanner with OCR, and AI Resume Builder",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
     "cap:sync": "npx cap sync",
     "cap:build": "npx cap copy",
     "cap:android": "npx cap open android",
-    "cap:run:android": "npx cap run android",
-    "android:debug": "cd android && gradlew assembleDebug"
+    "cap:run:android": "npx cap run android"
   },
   "keywords": [
+    "pagelens",
     "pdf",
     "ai-resume",
     "scanner",
@@ -22,7 +22,7 @@
     "android",
     "pwa"
   ],
-  "author": "Green PDF AI Team",
+  "author": "PageLens Team",
   "license": "MIT",
   "dependencies": {
     "@capacitor/android": "^6.1.2",
